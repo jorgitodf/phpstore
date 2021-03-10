@@ -1,0 +1,22 @@
+{
+    "name": "jorgito-pc/phpstore",
+    "description": "Loja OnLine PHP",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Jorgito Paiva",
+            "email": "jspaiva.1977@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "core\\" : "core/"
+        },
+        "files": [
+            "config.php"
+        ]
+    }
+}

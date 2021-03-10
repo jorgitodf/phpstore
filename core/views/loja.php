@@ -16,10 +16,12 @@
             <div class="text-center p-3 card">
                 <img src="assets/images/produtos/<?=$produto->imagem?>" alt="" class="img-fluid">
                 <h4><?=$produto->nome_produto?></h4>
-                <h3>R$ <?=$produto->preco?></h3>
+                <h3>R$ <?= number_format($produto->preco,2,",",".") ?></h3>
                 <p><small><?=$produto->descricao?></small></p>
                 <div>
-                    <button>Adicionar ao Carrinho</button>
+                    <button class="btn btn-secondary btn-sm" onclick="adicionar_carrinho(<?=$produto->id?>)">
+                        <i class="fas fa-shopping-cart me-2" aria-hidden="true"></i> 
+                    Adicionar ao Carrinho</button>
                 </div>
             </div>
         </div>

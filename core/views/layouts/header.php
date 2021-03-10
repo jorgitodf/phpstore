@@ -1,4 +1,12 @@
-<?php use core\classes\Functions; ?>
+<?php 
+use core\classes\Functions; 
+$total_produtos = 0;
+if (isset($_SESSION['carrinho'])) {
+    foreach ($_SESSION['carrinho'] as $value) {
+        $total_produtos += $value;
+    }
+}
+?>
 
 <div class="container-fluid navegacao fixed-top">
     <div class="row">
@@ -19,7 +27,7 @@
 
             <a href="?r=carrinho"><i class="fas fa-shopping-cart"></i></a>
 
-            <span class="badge badge-secondary">10</span>
+            <span class="badge badge-warning" id="carrinho"><?=$total_produtos?></span>
         </div>
     </div>
 </div>

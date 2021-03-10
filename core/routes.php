@@ -3,8 +3,9 @@
 $routes = [
     'home' => 'home@index',
     'loja' => 'loja@loja',
-    
-    'carrinho' => 'loja@carrinho',
+    'carrinho' => 'carrinho@carrinho',
+    'adicionar_carrinho' => 'carrinho@adicionar_carrinho',
+    'limpar_carrinho' => 'carrinho@limpar_carrinho',
     'novo_cliente' => 'user@novo_cliente',
     'criar_conta' => 'user@criar_conta',
     'confirmar_email' => 'user@confirmar_email',

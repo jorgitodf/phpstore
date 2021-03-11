@@ -19,9 +19,15 @@
                 <h3>R$ <?= number_format($produto->preco,2,",",".") ?></h3>
                 <p><small><?=$produto->descricao?></small></p>
                 <div>
-                    <button class="btn btn-secondary btn-sm" onclick="adicionar_carrinho(<?=$produto->id?>)">
-                        <i class="fas fa-shopping-cart me-2" aria-hidden="true"></i> 
-                    Adicionar ao Carrinho</button>
+                    <?php if ($produto->qtd_estoque <= 0): ?>
+                        <button class="btn btn-danger btn-sm">
+                            <i class="fas fa-shopping-cart me-2" aria-hidden="true"></i> Sem estoque
+                        </button>                    
+                    <?php else: ?>
+                        <button class="btn btn-secondary btn-sm" onclick="adicionar_carrinho(<?=$produto->id?>)">
+                            <i class="fas fa-shopping-cart me-2" aria-hidden="true"></i> Adicionar ao Carrinho
+                        </button>
+                    <?php endif;?>
                 </div>
             </div>
         </div>

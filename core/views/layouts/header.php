@@ -27,7 +27,7 @@ if (isset($_SESSION['carrinho'])) {
 
             <a href="?r=carrinho"><i class="fas fa-shopping-cart"></i></a>
 
-            <span class="badge badge-warning" id="carrinho"><?=$total_produtos?></span>
+            <span class="badge badge-warning" id="carrinho"><?=$total_produtos == 0 ? '' : $total_produtos?></span>
         </div>
     </div>
 </div>

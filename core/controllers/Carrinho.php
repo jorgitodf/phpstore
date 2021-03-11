@@ -16,6 +16,64 @@ class Carrinho
 
     public function carrinho()
     {
+        if (!isset($_SESSION['carrinho']) || count($_SESSION['carrinho']) == 0) {
+            $dados = [
+                'carrinho' => null
+            ];
+        } else {
+
+            $ids = [];
+
+            foreach ($_SESSION['carrinho'] as $id_produto => $quantidade) {
+                array_push($ids, filter_var($id_produto, FILTER_SANITIZE_NUMBER_INT));
+            }
+
+            $ids = implode(",", $ids);
+
+            $res = $this->produto->buscar_produtos_por_id($ids);
+
+            $dados_tmp = [];
+
+            foreach ($_SESSION['carrinho'] as $id_produto => $quantidade_carrinho) {
+                
+                foreach($res as $produto) {
+
+                    if ($produto->id == $id_produto) {
+                        $imagem = $produto->imagem;
+                        $titulo = $produto->nome_produto;
+                        $quantidade = $quantidade_carrinho;
+                        $preco = $produto->preco * $quantidade;
+                    }
+
+                    array_push($dados_tmp, [
+                        'imagem' => $imagem,
+                        'titulo' => $titulo,
+                        'quantidade' => $quantidade,
+                        'preco' => $preco,
+                    ]);
+                    break;
+                        
+                }
+
+            }
+
+            $total = 0;
+
+            foreach($dados_tmp as $item) {
+                $total += $item['preco'];
+            }
+
+            array_push($dados_tmp, $total);
+
+            Functions::printDados($dados_tmp);
+
+            $dados = [
+                'carrinho' => $dados_tmp
+            ];
+        }
+
+
+
         if (Functions::clienteLogado()) {
             Functions::redirect();
             return;
@@ -27,12 +85,23 @@ class Carrinho
             'carrinho',
             'layouts/footer',
             'layouts/html_footer',
-        ]);
+        ], $dados);
     }
+
 
     public function adicionar_carrinho()
     {
+        if (!isset($_GET['id_produto'])) {
+            isset($_SESSION['carrinho']) ? count($_SESSION['carrinho']) : '';
+            return;
+        } 
+
         $id_produto = trim(filter_var($_GET['id_produto'], FILTER_SANITIZE_NUMBER_INT));
+
+        if (!$this->produto->verificar_produto_estoque($id_produto)) {
+            isset($_SESSION['carrinho']) ? count($_SESSION['carrinho']) : '';
+            return;
+        }
         
         $carrinho = [];
 
@@ -59,7 +128,7 @@ class Carrinho
 
     public function limpar_carrinho()
     {
-        $_SESSION['carrinho'] = [];
-        //header('Refresh:0');
+        unset($_SESSION['carrinho']);
+        $this->carrinho();
     }
 }

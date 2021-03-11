@@ -9,7 +9,8 @@
         "criar",
         "loja",
         "navegacao",
-        "phpstore"
+        "phpstore",
+        "quantidade"
     ],
     "cSpell.ignoreWords": [
         "phpstore"

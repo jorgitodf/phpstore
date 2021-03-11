@@ -46,4 +46,22 @@ class Products
         return $categorias;
     }    
 
+    public function verificar_produto_estoque($id_produto)
+    {
+        $parametros = [
+            ':id' => $id_produto
+        ];
+
+        $res = $this->bd->select("SELECT * FROM {$this->table} 
+            WHERE id = :id AND visibilidade = 1 AND qtd_estoque > 0", $parametros);
+
+        return count($res) != 0 ? true : false;
+    }
+
+
+    public function buscar_produtos_por_id($ids)
+    {
+        return $this->bd->select("SELECT * FROM {$this->table} WHERE id IN ($ids)");
+    }
+
 }

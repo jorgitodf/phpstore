@@ -6,6 +6,7 @@ $routes = [
     'carrinho' => 'carrinho@carrinho',
     'adicionar_carrinho' => 'carrinho@adicionar_carrinho',
     'limpar_carrinho' => 'carrinho@limpar_carrinho',
+    'remover_produto_carrinho' => 'carrinho@remover_produto_carrinho',
     'novo_cliente' => 'user@novo_cliente',
     'criar_conta' => 'user@criar_conta',
     'confirmar_email' => 'user@confirmar_email',

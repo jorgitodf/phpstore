@@ -39,20 +39,21 @@ class Carrinho
                 foreach($res as $produto) {
 
                     if ($produto->id == $id_produto) {
+                        $id_produto = $produto->id;
                         $imagem = $produto->imagem;
                         $titulo = $produto->nome_produto;
                         $quantidade = $quantidade_carrinho;
                         $preco = $produto->preco * $quantidade;
-                    }
 
-                    array_push($dados_tmp, [
-                        'imagem' => $imagem,
-                        'titulo' => $titulo,
-                        'quantidade' => $quantidade,
-                        'preco' => $preco,
-                    ]);
-                    break;
-                        
+                        array_push($dados_tmp, [
+                            'id_produto' => $id_produto,
+                            'imagem' => $imagem,
+                            'titulo' => $titulo,
+                            'quantidade' => $quantidade,
+                            'preco' => $preco,
+                        ]);
+                        break;
+                    }
                 }
 
             }
@@ -65,18 +66,9 @@ class Carrinho
 
             array_push($dados_tmp, $total);
 
-            Functions::printDados($dados_tmp);
-
             $dados = [
                 'carrinho' => $dados_tmp
             ];
-        }
-
-
-
-        if (Functions::clienteLogado()) {
-            Functions::redirect();
-            return;
         }
 
         Functions::Layout([
@@ -129,6 +121,19 @@ class Carrinho
     public function limpar_carrinho()
     {
         unset($_SESSION['carrinho']);
+        $this->carrinho();
+    }
+
+    public function remover_produto_carrinho()
+    {
+        $id_produto = trim(filter_var($_GET['id_produto'], FILTER_SANITIZE_NUMBER_INT));
+
+        if (isset($_SESSION['carrinho'])) {
+            $carrinho = $_SESSION['carrinho'];
+            unset($carrinho[$id_produto]);
+            $_SESSION['carrinho'] = $carrinho;
+        }
+
         $this->carrinho();
     }
 }

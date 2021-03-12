@@ -50,7 +50,6 @@ class User
             header('Location: /');
             return;
         }
-
         
         if (empty($name)) {
             $_SESSION['erro'] = 'Informe o seu Nome Completo!';
@@ -79,7 +78,6 @@ class User
             $res = $this->user->createUser($name, $email, $password, $ip, $token);
 
             $response = $this->email->send_email_novo_cliente($email, $name, $token);
- 
 
             if ($res !== false) {
 
@@ -195,8 +193,14 @@ class User
                 $_SESSION['nome_cliente'] = $res[0]->name;
                 $_SESSION['email_cliente'] = $res[0]->email;
                 $_SESSION['token_cliente'] = mb_convert_case(Functions::createHash(60), MB_CASE_TITLE, 'UTF-8');
-                Functions::redirect();
-                return;
+
+                if (isset($_SESSION['tmp_carrinho'])) {
+                    unset($_SESSION['tmp_carrinho']);
+                    Functions::redirect('carrinho');
+                } else {
+                    Functions::redirect();
+                    return;
+                }
             }
 
         }

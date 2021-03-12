@@ -56,11 +56,16 @@
                 </table>
                 <div class="row">
                     <div class="col">
-                        <a href="?r=limpar_carrinho" class="btn btn-primary">Limpar Carrinho</a> 
+                        <!-- <a href="?r=limpar_carrinho" class="btn btn-primary">Limpar Carrinho</a>  -->
+                        <button onclick="confirmar_limpar_carrinho()" class="btn btn-primary">Limpar Carrinho</button>
+                        <span class="ml-4" id="confirmar_limpar_carrinho" style="display: none;">Tem certeza?
+                            <button class="btn btn-danger" onclick="limpar_carrinho_off()">Não</button>
+                            <a href="?r=limpar_carrinho" class="btn btn-success">Sim</a>    
+                        </span>
                     </div>
                     <div class="col text-right">
                         <a href="?r=loja" class="btn btn-primary">Comprar Mais</a>
-                        <a href="" class="btn btn-primary">Finalizar Compra</a>
+                        <a href="?r=finalizar_compra" class="btn btn-primary">Finalizar Compra</a>
                     </div>
                 </div>
             </div>   

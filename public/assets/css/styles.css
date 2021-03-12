@@ -1,0 +1,39 @@
+/** * 
+ *  box-shadow: inset 0 0 1px rgba(255,0,0,0.5) **/
+.navegacao {
+  background-color: #9aabc2;
+  color: black;
+}
+
+.rodape {
+  background-color: #3c4a52;
+  color: white;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: white;
+  margin: 0 10px;
+}
+
+.nav-item:hover {
+  text-decoration: underline;
+  color: white;
+}
+
+.espaco_fundo {
+  margin-bottom: 80px;
+  margin-top: 56px;
+}
+
+.espaco_fundo_forms {
+  margin-bottom: 80px;
+  margin-top: 80px;
+}
+
+.espaco_fundo_carrinho {
+  margin-bottom: 5px;
+  margin-top: 60px;
+}
+
+/*# sourceMappingURL=styles.css.map */

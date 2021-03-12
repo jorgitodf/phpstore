@@ -1,6 +1,16 @@
 jspaiva.1977@gmail.com
 
+sass --watch core/views/sass/style.sass:public/assets/css/styles.css
+
 https://willianjusten.com.br/semantic-version/
 
+Versionamento semântico 1.0.0
 
+– 1 (Major) – controle de compatibilidade. Informa que existem funcionalidades/códigos incompatíveis com as versões anteriores.
+
+– 0 (Minor) – controle de funcionalidade. Informa que novas funcionalidades foram adicionadas ao código.
+
+– 0 (Patch) – controle de correção de bugs. Informa que um ou mais erros foram identificados e corrigidos.
+
+– Pré-release – versão candidata. É uma versão com algumas instabilidades pois pode ter incompatibilidades no pacote.
 

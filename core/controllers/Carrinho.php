@@ -136,4 +136,13 @@ class Carrinho
 
         $this->carrinho();
     }
+
+    public function finalizar_compra()
+    {
+        if (!isset($_SESSION['cliente'])) {
+            $_SESSION['tmp_carrinho'] = true;
+            Functions::redirect('login');
+            return;
+        } 
+    }
 }

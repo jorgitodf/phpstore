@@ -30,3 +30,14 @@ function limpar_carrinho_off()
     let e = document.getElementById('confirmar_limpar_carrinho');
     e.style.display = "none";
 }
+
+function usar_outro_endereco()
+{
+    let e = document.getElementById('alterar_endereco_entrega');
+    if (e.checked == true) {
+        document.getElementById('outro_endereco').style.display = "block";
+    } else {
+        document.getElementById('outro_endereco').style.display = "none";
+    }
+    
+}

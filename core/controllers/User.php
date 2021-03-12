@@ -196,10 +196,9 @@ class User
 
                 if (isset($_SESSION['tmp_carrinho'])) {
                     unset($_SESSION['tmp_carrinho']);
-                    Functions::redirect('carrinho');
+                    Functions::redirect('finalizar_compra_resumo');
                 } else {
                     Functions::redirect();
-                    return;
                 }
             }
 

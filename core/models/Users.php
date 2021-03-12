@@ -84,4 +84,19 @@ class Users
         }
     } 
 
+    public function buscar_dados_cliente(int $id_cliente)
+    {
+        $parametros = [
+            ':id' => $id_cliente
+        ];
+
+        $res = $this->bd->select("SELECT id, name, email FROM users WHERE id = :id AND ativo = 1", $parametros);
+
+        if (count($res) > 0) {
+            return $res[0];
+        } else {
+            return false;
+        }
+    } 
+
 }

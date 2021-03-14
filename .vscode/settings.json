@@ -1,16 +1,26 @@
 {
     "cSpell.words": [
+        "Cancelar",
         "Completo",
+        "Entregar",
         "Informe",
         "Repita",
         "Senha",
+        "alterar",
+        "alternativo",
         "carrinho",
+        "cidade",
         "conta",
         "criar",
+        "endereco",
+        "entrega",
+        "inicial",
         "loja",
         "navegacao",
+        "pagina",
         "phpstore",
-        "quantidade"
+        "quantidade",
+        "usar"
     ],
     "cSpell.ignoreWords": [
         "phpstore"

@@ -41,3 +41,19 @@ function usar_outro_endereco()
     }
     
 }
+
+function outro_endereco()
+{
+    axios.defaults.withCredentials = true;
+    axios({
+        method: 'post',
+        url: '?r=outro_endereco',
+        data: {
+            endereco_alternativo: document.getElementById('endereco_alternativo').value,
+            cidade: document.getElementById('cidade').value
+        }
+    }).then(function(response) {
+            console.log(response.data);
+        });
+    
+}

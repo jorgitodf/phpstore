@@ -1,4 +1,4 @@
-<div class="container espaco_fundo_carrinho">
+<div class="container container-compra-resumo">
     <div class="row">
         <div class="col-sm-12">
             <h4 class="my-2">Resumo da Sua compra</h4>
@@ -62,20 +62,23 @@
                     <label class="form-check-label" for="alterar_endereco_entrega">Entregar em outro Endereço</label>
                 </div>
 
-                <div id="outro_endereco" style="display: none;">
-                    Outro endereço
+                <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12" id="outro_endereco" style="display: none;">
+                    <div class="form-group col col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <label class="form-label" for="outro_endereco">Endereço:</label>            
+                        <input type="text" id="endereco_alternativo" name="endereco_alternativo" class="form-control">
+                    </div>
+                    <div class="form-group col col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <label class="form-label" for="cidade">Cidade:</label>            
+                        <input type="text" id="cidade" name="cidade" class="form-control">
+                    </div>
                 </div>
 
                 <div class="row my-3">
                     <div class="col">
-                        <button onclick="" class="btn btn-primary">Cancelar</button>
-                        <span class="ml-4" id="confirmar_limpar_carrinho" style="display: none;">Tem certeza?
-                            <button class="btn btn-danger" onclick="">Não</button>
-                            <a href="?r=limpar_carrinho" class="btn btn-success">Sim</a>    
-                        </span>
+                        <a href="?r=carrinho" onclick="" class="btn btn-primary">Cancelar</a>
                     </div>
                     <div class="col text-right">
-                        <a href="" class="btn btn-primary">Escolher Forma de Pagamento</a>
+                        <a href="?r=escolher_metodo_pagamento" onclick="outro_endereco()" class="btn btn-primary">Escolher Forma de Pagamento</a>
                     </div>
                 </div>
             </div>   

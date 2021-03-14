@@ -1,6 +1,7 @@
-<div class="container-fluid espaco_fundo">
+
+<div class="container-fluid container-loja col col-sm-12 col-md-12 col-lg-12 col-xl-12">
     <div class="row">
-        <div class="col-12 text-center my-4">
+        <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center my-4">
             <a href="?r=loja&c=todos" class="btn btn-primary">Todos</a>
             <?php foreach($categorias as $key => $categoria): ?>    
                 <a href="?r=loja&c=<?=$categoria['nome_categoria']?>" class="btn btn-primary">
@@ -12,8 +13,8 @@
 
     <div class="row">
         <?php foreach($produtos as $produto): ?>
-        <div class="col-sm-3 col-6 p-1">
-            <div class="text-center p-3 card">
+        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 p-1">
+            <div class="text-center p-3 card container-loja-card">
                 <img src="assets/images/produtos/<?=$produto->imagem?>" alt="" class="img-fluid">
                 <h4><?=$produto->nome_produto?></h4>
                 <h3>R$ <?= number_format($produto->preco,2,",",".") ?></h3>

@@ -1,23 +1,22 @@
-<div class="container espaco_fundo_carrinho">
+<div class="container container-carrinho col col-sm-10 col-md-10 col-lg-10 col-xl-10">
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="my-2">Sua compra</h4>
             <!-- <button onclick="limpar_carrinho()" class="btn btn-primary">Limpar Carrinho</button> -->
             <hr>
         </div>
     </div>
 </div>
-<div class="container">
+<div class="container col col-sm-10 col-md-10 col-lg-10 col-xl-10">
     <div class="row">
-        <div class="col-12">
+        <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <?php if ($carrinho == null): ?>
                 <p class="text-center">Não existem produtos no carrinho.</p>
                 <div class="mt-4 text-center">
                     <a href="?r=loja" class="btn btn-primary">Ir para a Loja</a>
                 </div>
-                
             <?php else: ?>
-            <div style="margin-bottom: 50px;">
+            <div style="margin-bottom: 40px;">
                 <table class="table table-striped table-hover table-sm">
                     <thead>
                         <tr>
@@ -55,7 +54,7 @@
                     </tbody>
                 </table>
                 <div class="row">
-                    <div class="col">
+                    <div class="col col-sm-12 col-md-8 col-lg-7 col-xl-5">
                         <!-- <a href="?r=limpar_carrinho" class="btn btn-primary">Limpar Carrinho</a>  -->
                         <button onclick="confirmar_limpar_carrinho()" class="btn btn-primary">Limpar Carrinho</button>
                         <span class="ml-4" id="confirmar_limpar_carrinho" style="display: none;">Tem certeza?
@@ -63,7 +62,7 @@
                             <a href="?r=limpar_carrinho" class="btn btn-success">Sim</a>    
                         </span>
                     </div>
-                    <div class="col text-right">
+                    <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-7 text-right">
                         <a href="?r=loja" class="btn btn-primary">Comprar Mais</a>
                         <a href="?r=finalizar_compra" class="btn btn-primary">Finalizar Compra</a>
                     </div>

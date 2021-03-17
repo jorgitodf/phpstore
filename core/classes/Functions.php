@@ -36,9 +36,19 @@ class Functions
     public static function redirect($rota = '') 
     {
         if (!empty($rota)) {
-            header("Location: " . BASE_URL . "?r=$rota");
-        } else {
+            if (BASE_URL == 'http://localhost/') {
+                header("Location: http://localhost/phpstore/public/?r=$rota");
+            } else {
             header("Location: " . BASE_URL);
+                header("Location: " . BASE_URL . "?r=$rota");
+            }
+        } else {
+            if (BASE_URL == 'http://localhost/') {
+                header("Location: http://localhost/phpstore/public/");
+            } else {
+            header("Location: " . BASE_URL);
+                header("Location: " . BASE_URL);
+            }
         }
     }
 
@@ -47,6 +57,15 @@ class Functions
         echo "<pre>";
         print_r($dados);
         die();
+    }
+
+    public static function gerarCódigoCompra() 
+    {
+        $codigo = "";
+        $chars = "ABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZ";
+        $codigo .= substr(str_shuffle($chars), 0, 3);
+        $codigo .= rand(100000, 999999);
+        return $codigo;
     }
 
 }

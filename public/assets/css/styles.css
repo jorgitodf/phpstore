@@ -30,7 +30,12 @@
 }
 
 .container-compra-resumo {
-  margin-top: 3rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.container-compra-confirmada {
+  margin-top: 4rem;
   padding: 1rem;
 }
 

@@ -1,8 +1,7 @@
 <div class="container container-compra-resumo">
     <div class="row">
         <div class="col-sm-12">
-            <h4 class="my-2">Resumo da Sua compra</h4>
-            <hr>
+            <h4 class="my-1">Resumo da Sua compra</h4>
         </div>
     </div>
 </div>
@@ -10,7 +9,7 @@
     <div class="row">
         <div class="col-12">
 
-            <div style="margin-bottom: 50px;">
+            <div style="margin-bottom: 40px;">
                 <table class="table table-striped table-hover table-sm">
                     <thead>
                         <tr>
@@ -39,7 +38,7 @@
                                     <td></td>
                                     <td></td>
                                     <td><h5>Total:</h5></td>
-                                    <td class="text-right"><h4>R$ <?= number_format($produto,2,",",".")?></h4></td>
+                                    <td class="text-right"><h5>R$ <?= number_format($produto,2,",",".")?></h5></td>
                                     <td></td>
                                 </tr>
                             <?php endif; ?>       
@@ -48,20 +47,21 @@
                     </tbody>
                 </table>
 
-                <h4 class="bg-dark text-white p-2">Dados do Cliente</h4>
+                <h5 class="bg-dark text-white p-1">Dados do Cliente</h5>
                 <div class="row">
-                    <div class="col">
+                    <div class="col col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <p>Nome: <strong><?=$cliente->name?></strong></p>
+                    </div>
+                    <div class="col col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <p>E-mail: <strong><?=$cliente->email?></strong></p>
                     </div>
-                    <div class="col"></div>
                 </div>
                 
                 <div class="form-check">
                     <input type="checkbox" onchange="usar_outro_endereco()" name="alterar_endereco_entrega" id="alterar_endereco_entrega" class="form-check-input">
                     <label class="form-check-label" for="alterar_endereco_entrega">Entregar em outro Endereço</label>
                 </div>
-
+                
                 <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12" id="outro_endereco" style="display: none;">
                     <div class="form-group col col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <label class="form-label" for="outro_endereco">Endereço:</label>            
@@ -71,14 +71,28 @@
                         <label class="form-label" for="cidade">Cidade:</label>            
                         <input type="text" id="cidade" name="cidade" class="form-control">
                     </div>
+                </div></br>
+
+                <h5 class="bg-dark text-white p-1">Dados do Pagamento</h5>
+                <div class="row">
+                    <div class="col col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <p>Conta Bancária: 123456</p>   
+                    </div>
+                    <div class="col col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <p>Código da Compra: <strong><?=$_SESSION['codigo_compra']?></strong></p>   
+                    </div>
+                    <div class="col col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <p>Total: <strong>R$ <?= number_format($produto,2,",",".")?></strong></p>   
+                    </div>
                 </div>
 
-                <div class="row my-3">
+
+                <div class="row my-2">
                     <div class="col">
                         <a href="?r=carrinho" onclick="" class="btn btn-primary">Cancelar</a>
                     </div>
                     <div class="col text-right">
-                        <a href="?r=escolher_metodo_pagamento" onclick="outro_endereco()" class="btn btn-primary">Escolher Forma de Pagamento</a>
+                        <a href="?r=confirmar_compra" onclick="outro_endereco()" class="btn btn-primary">Finalizar Compra</a>
                     </div>
                 </div>
             </div>   

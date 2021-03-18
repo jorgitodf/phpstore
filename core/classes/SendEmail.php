@@ -50,7 +50,7 @@ class SendEmail
 
     }
 
-    public function enviar_email_confirmacao_compra(string $email_cliente, string $nome_cliente, string $token)
+    public function enviar_email_confirmacao_compra(string $email_cliente, array $dados_compra)
     {
         $mail = new PHPMailer(true);
 
@@ -67,15 +67,25 @@ class SendEmail
             $mail->CharSet    = 'UTF-8';                           
 
             $mail->setFrom(EMAIL_FROM, APP_NAME);
-            $mail->addAddress($email_cliente, $nome_cliente);     
+            $mail->addAddress($email_cliente);     
 
             $mail->isHTML(true);                                  
-            $mail->Subject = APP_NAME . ' - Confirmação da Compra - xxxxxxx';
-            $html = '<p>Seja bem vindo à nossa Loja ' . APP_NAME . '</p>';
-            $html .= '';
-            $html .= '';
-            $html .= '';
-            $html .= '<p><i><small>'.APP_NAME.'</small></i></p>';
+            $mail->Subject = APP_NAME . " - Confirmação da Compra - {$dados_compra['dados_pagamento']['codigo_compra']}";
+            $html = '<p>E-mail de confirmação da sua compra.</p>';
+            $html .= '<p>Dados da sua Compra:</p>';
+            $html .= '<ul>';
+                        foreach ($dados_compra['lista_compra'] as $value) {
+                            $html .= "<li>{$value}</li>";
+                        }
+            $html .= '</ul>';
+            $html .= "<p>Total: <strong>{$dados_compra['total']}</strong></p>";
+            $html .= "<hr>";
+            $html .= "<p>DADOS DO PAGAMENTO:</p>";            
+            $html .= "<p>Número da Conta: <strong>{$dados_compra['dados_pagamento']['numero_conta']}</strong></p>";
+            $html .= "<p>Código da Compra: <strong>{$dados_compra['dados_pagamento']['codigo_compra']}</strong></p>";
+            $html .= "<p>Valor a Pagar: <strong>{$dados_compra['total']}</strong></p>";
+            $html .= "<hr>";
+            $html .= "<p>NOTA: A sua compra só será processada após confirmação do pagamento!</p>";
 
             $mail->Body = $html;
 

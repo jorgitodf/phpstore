@@ -1,3 +1,17 @@
+a {
+  text-decoration: none;
+  color: white;
+}
+
+li {
+  list-style: none;
+}
+
+.navegacao {
+  background-color: #9aabc2;
+  color: black;
+}
+
 .nav-item {
   text-decoration: none;
   color: white;
@@ -12,10 +26,11 @@
 .container-pagina-inicial {
   margin-top: 3rem;
   padding: 1rem;
+  height: 25.1rem;
 }
 
 .container-carrinho {
-  margin-top: 3rem;
+  margin-top: 3.5rem !important;
   padding: 1rem;
 }
 
@@ -39,18 +54,88 @@
   padding: 1rem;
 }
 
-.borda {
-  border: 2px solid #000;
+.container-login {
+  margin-top: 3.45rem;
+  padding: 1rem;
 }
 
-.navegacao {
-  background-color: #9aabc2;
-  color: black;
-}
-
-.rodape {
+footer {
   background-color: #3c4a52;
   color: white;
+  padding: 2rem 1rem 1rem 1rem;
+}
+footer h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+footer .footer-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+footer .footer-info-container {
+  width: 20%;
+  padding-left: 0 !important;
+}
+footer .footer-info-container ul {
+  padding-left: 0;
+}
+footer .footer-links-container-list a {
+  color: white;
+  transition: 0.3s;
+}
+footer .footer-links-container-list a:hover {
+  color: #DC143C;
+}
+footer .footer-atend-container {
+  width: 25%;
+  padding-left: 0 !important;
+}
+footer .footer-atend-container ul {
+  padding-left: 0;
+}
+footer .footer-cards-container {
+  width: 25%;
+  padding-left: 0 !important;
+}
+footer .footer-cards-container ul {
+  padding-left: 0;
+}
+footer .footer-cards-container li {
+  width: 45px;
+  height: 30px;
+  margin: 0;
+  float: left;
+  overflow: hidden;
+}
+footer .footer-cards-container li img:hover {
+  opacity: 0.6;
+  transition: 0.5s;
+}
+footer .image-card {
+  height: 25px;
+}
+footer .image-correios {
+  width: 100px;
+  height: 40px;
+}
+footer .li-image-correios {
+  width: 100px !important;
+  height: 60px !important;
+}
+
+.corpo {
+  height: 24.6rem;
+}
+
+.borda-branca {
+  border: 2px solid white;
+}
+
+.borda {
+  border: 2px solid red;
+  width: 100px !important;
 }
 
 .espaco_fundo {

@@ -1,15 +1,13 @@
-<div class="container container-carrinho col col-sm-10 col-md-10 col-lg-10 col-xl-10">
-    <div class="row">
-        <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
+<div class="container-fluid container-carrinho col-sm-10 col-md-10 col-lg-10 col-xl-10 <?php echo $carrinho == null ? "corpo" : ""; ?>">
+    <div class="row-fluid">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="my-2">Sua compra</h4>
             <!-- <button onclick="limpar_carrinho()" class="btn btn-primary">Limpar Carrinho</button> -->
             <hr>
         </div>
     </div>
-</div>
-<div class="container col col-sm-10 col-md-10 col-lg-10 col-xl-10">
-    <div class="row">
-        <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div class="row-fluid">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <?php if ($carrinho == null): ?>
                 <p class="text-center">Não existem produtos no carrinho.</p>
                 <div class="mt-4 text-center">
@@ -72,3 +70,5 @@
         </div>
     </div>
 </div>
+
+

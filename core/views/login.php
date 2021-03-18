@@ -1,4 +1,4 @@
-<div class="container-fluid espaco_fundo_forms">
+<div class="container-fluid container-login">
     <div class="row my-5">
         <div class="col-sm-4 offset-sm-4">
             <h3 class="text-center">Login de Cliente</h3>

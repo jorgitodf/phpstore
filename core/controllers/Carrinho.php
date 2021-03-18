@@ -3,6 +3,7 @@
 namespace core\controllers;
 
 use core\classes\Functions;
+use core\classes\SendEmail;
 use core\models\Products;
 use core\models\Users;
 
@@ -10,11 +11,13 @@ class Carrinho
 {
     private $produto;
     private $cliente;
+    private $email;
 
     public function __construct()
     {
         $this->produto = new Products();
         $this->cliente = new Users();
+        $this->email = new SendEmail();
     }
 
     public function carrinho()
@@ -233,7 +236,7 @@ class Carrinho
         $string_produtos = [];
         foreach ($results as $value) {
             $quantidade = $_SESSION['carrinho'][$value->id];
-            $string_produtos[] = "{$quantidade}x {$value->nome_produto} - " . number_format($value->preco, 2,",",".");
+            $string_produtos[] = "{$quantidade}x {$value->nome_produto} - R$ " . number_format($value->preco, 2,",",".");
         }
 
         $dados_compra['lista_compra'] = $string_produtos;
@@ -246,7 +249,11 @@ class Carrinho
             'total' => "R$ " . number_format($_SESSION['total_compra'], 2,",",".")
         ];
 
-        Functions::printDados($dados_compra);
+        $this->email->enviar_email_confirmacao_compra($_SESSION['email_cliente'], $dados_compra);
+
+
+
+        die('Terminado');
 
 
 

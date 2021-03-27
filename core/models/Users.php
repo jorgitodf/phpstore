@@ -22,7 +22,7 @@ class Users
         ];
 
         return $this->bd->select("SELECT email FROM users WHERE email = :email", $parametros);
-    }    
+    }
 
     public function createUser($name, $email, $password, $ip, $token)
     {
@@ -40,7 +40,6 @@ class Users
 
         return $this->bd->insert("INSERT INTO users VALUES (
             0, :name, :email, :password, :token, :ativo, :created_at, :updated_at, :last_login_ip)", $parametros);
-
     }
 
     public function validarEmail(string $token)
@@ -62,7 +61,7 @@ class Users
         $this->bd->update("UPDATE users SET ativo = 1, token = NULL, updated_at = NOW() WHERE id = :id", $parametros);
 
         return true;
-    }  
+    }
 
     public function checkPasswordAndEmail(string $email, string $password)
     {
@@ -73,16 +72,14 @@ class Users
         $res = $this->bd->select("SELECT id, name, email, password FROM users WHERE email = :email AND ativo = 1", $parametros);
 
         if (count($res) > 0) {
-
             if (!password_verify($password, $res[0]->password)) {
                 return false;
             }
             return $res;
-
         } else {
             return false;
         }
-    } 
+    }
 
     public function buscar_dados_cliente(int $id_cliente)
     {
@@ -97,6 +94,5 @@ class Users
         } else {
             return false;
         }
-    } 
-
+    }
 }

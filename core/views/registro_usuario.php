@@ -27,12 +27,12 @@
                     <input type="hidden" class="form-control" name="ip" value="<?php echo($_SERVER['REMOTE_ADDR'])?>" readonly="true">
                 </div>
 
-                <?php if (isset($_SESSION['erro'])): ?>
+                <?php if (isset($_SESSION['erro'])) : ?>
                     <div class="form-group alert alert-danger text-center p-2">
                         <?= $_SESSION['erro'] ?>
                         <?php unset($_SESSION['erro']) ?>
                     </div>
-                <?php elseif (isset($_SESSION['sucesso'])): ?>
+                <?php elseif (isset($_SESSION['sucesso'])) : ?>
                     <div class="form-group alert alert-success text-center p-2">
                         <?= $_SESSION['sucesso'] ?>
                         <?php unset($_SESSION['sucesso']) ?>

@@ -9,7 +9,6 @@ class Home
 {
     public function index()
     {
-
         Functions::Layout([
             'layouts/html_header',
             'layouts/header',
@@ -17,6 +16,5 @@ class Home
             'layouts/footer',
             'layouts/html_footer',
         ]);
-
     }
 }

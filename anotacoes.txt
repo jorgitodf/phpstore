@@ -14,3 +14,6 @@ Versionamento semântico 1.0.0
 
 – Pré-release – versão candidata. É uma versão com algumas instabilidades pois pode ter incompatibilidades no pacote.
 
+<small><?=APP_NAME.'('.APP_VERSION.') &copy' . date('Y') ?></small>
+
+https://www.php.net/manual/en/function.http-response-code.php

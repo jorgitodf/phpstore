@@ -16,7 +16,7 @@ class Functions
             extract($dados);
         }
 
-        foreach($estruturas as $estrutura) {
+        foreach ($estruturas as $estrutura) {
             include("../core/views/$estrutura.php");
         }
     }
@@ -26,40 +26,40 @@ class Functions
         return isset($_SESSION['id_cliente']);
     }
 
-    public static function createHash($num_caracteres = null) 
+    public static function createHash($num_caracteres = null)
     {
         $chars = '041646384956321laksmdkmasldmfasmdfmaslçdkmfalksdmflkasdLAKSMDKMASLDMFASMDFMASLÇDKMFALKSDMFLKASD';
         return substr(str_shuffle($chars), 0, $num_caracteres);
     }
 
-    
-    public static function redirect($rota = '') 
+
+    public static function redirect($rota = '')
     {
         if (!empty($rota)) {
             if (BASE_URL == 'http://localhost/') {
                 header("Location: http://localhost/phpstore/public/?r=$rota");
             } else {
-            header("Location: " . BASE_URL);
+                header("Location: " . BASE_URL);
                 header("Location: " . BASE_URL . "?r=$rota");
             }
         } else {
             if (BASE_URL == 'http://localhost/') {
                 header("Location: http://localhost/phpstore/public/");
             } else {
-            header("Location: " . BASE_URL);
+                header("Location: " . BASE_URL);
                 header("Location: " . BASE_URL);
             }
         }
     }
 
-    public static function printDados($dados) 
+    public static function printDados($dados)
     {
         echo "<pre>";
         print_r($dados);
         die();
     }
 
-    public static function gerarCódigoCompra() 
+    public static function gerarCódigoCompra()
     {
         $codigo = "";
         $chars = "ABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZ";
@@ -67,5 +67,4 @@ class Functions
         $codigo .= rand(100000, 999999);
         return $codigo;
     }
-
 }

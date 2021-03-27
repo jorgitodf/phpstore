@@ -5,16 +5,19 @@ namespace core\controllers;
 use core\classes\Functions;
 use core\classes\SendEmail;
 use core\models\Users;
+use core\models\Address;
 use Exception;
 
 class User
 {
     private $user;
+    private $address;
 
     public function __construct()
     {
         $this->user = new Users();
         $this->email = new SendEmail();
+        $this->address = new Address();
     }
 
     //===========================================================================================//
@@ -44,43 +47,41 @@ class User
         if (Functions::clienteLogado()) {
             header('Location: /');
             return;
-        } 
+        }
 
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
             header('Location: /');
             return;
         }
-        
+
         if (empty($name)) {
             $_SESSION['erro'] = 'Informe o seu Nome Completo!';
             $this->novo_cliente($name, $email, null);
             return;
-        } else if (empty($email)) {
+        } elseif (empty($email)) {
             $_SESSION['erro'] = 'Informe o seu E-mail!';
             $this->novo_cliente($name, $email, null);
             return;
-        } else if ($password !== $password) {
+        } elseif ($password !== $password) {
             $_SESSION['erro'] = 'As senhas não são iguais!';
             $this->novo_cliente($name, $email, null);
             return;
-        } else if (empty($_POST['password']) || empty($_POST['password_repeat'])) {
+        } elseif (empty($_POST['password']) || empty($_POST['password_repeat'])) {
             $_SESSION['erro'] = 'Informe a sua Senha!';
             $this->novo_cliente($name, $email, null);
             return;
-        } else if (count($this->user->checkEmail($email)) != 0) {
+        } elseif (count($this->user->checkEmail($email)) != 0) {
             $_SESSION['erro'] = 'O E-mail informado já está cadastrado!';
             $this->novo_cliente($name, $email, null);
             return;
         } else {
-
             $token = mb_convert_case(Functions::createHash(60), MB_CASE_TITLE, 'UTF-8');
-   
+
             $res = $this->user->createUser($name, $email, $password, $ip, $token);
 
             $response = $this->email->send_email_novo_cliente($email, $name, $token);
 
             if ($res !== false) {
-
                 Functions::Layout([
                     'layouts/html_header',
                     'layouts/header',
@@ -89,9 +90,7 @@ class User
                     'layouts/html_footer',
                 ]);
                 return;
-
             }
-
         }
     }
 
@@ -117,7 +116,6 @@ class User
         $res = $this->user->validarEmail($token);
 
         if ($res) {
-
             Functions::Layout([
                 'layouts/html_header',
                 'layouts/header',
@@ -126,7 +124,6 @@ class User
                 'layouts/html_footer',
             ]);
             return;
-
         } else {
             Functions::redirect();
         }
@@ -168,21 +165,21 @@ class User
             $_SESSION['erro'] = 'Informe o seu E-mail!';
             $this->login($email, null);
             return;
-        } else if (!filter_var($email, FILTER_SANITIZE_EMAIL)) {
+        } elseif (!filter_var($email, FILTER_SANITIZE_EMAIL)) {
             $_SESSION['erro'] = 'O E-mail informado não é válido!';
             $this->login($email, $password);
             return;
-        } else if (count($this->user->checkEmail($email)) == 0) {
+        } elseif (count($this->user->checkEmail($email)) == 0) {
             $_SESSION['erro'] = 'O E-mail informado não está cadastrado!';
             $this->login($email, null);
-            return;  
-        } else if (empty($password)) {
+            return;
+        } elseif (empty($password)) {
             $_SESSION['erro'] = 'Informe a sua Senha!';
             $this->login($email, $password);
             return;
         } else {
-
             $res = $this->user->checkPasswordAndEmail($email, $password);
+            $addres = $this->address->getAddressUserById($res[0]->id);
 
             if (is_bool($res)) {
                 $_SESSION['erro'] = 'Senha Inválida!';
@@ -197,13 +194,13 @@ class User
                 if (isset($_SESSION['tmp_carrinho'])) {
                     unset($_SESSION['tmp_carrinho']);
                     Functions::redirect('finalizar_compra_resumo');
+                } elseif (!$addres) {
+                    Functions::redirect('endereco');
                 } else {
                     Functions::redirect();
                 }
             }
-
         }
-
     }
 
     public function logout()

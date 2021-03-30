@@ -3,7 +3,6 @@
 namespace core\controllers;
 
 use core\classes\Functions;
-use core\classes\SendEmail;
 
 class Home
 {

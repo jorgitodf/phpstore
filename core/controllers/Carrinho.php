@@ -137,6 +137,12 @@ class Carrinho
         $this->carrinho();
     }
 
+    public function esvaziarCarrinho()
+    {
+        unset($_SESSION['carrinho']);
+        unset($_SESSION['codigo_compra']);
+    }
+
     public function remover_produto_carrinho()
     {
         $id_produto = trim(filter_var($_GET['id_produto'], FILTER_SANITIZE_NUMBER_INT));
@@ -295,12 +301,12 @@ class Carrinho
         if ($statusPay[0]->status_id == 7) {
             /** cancelar a compra */
             $this->purchasing->updatePurchaseStatus($idPur[0]->id, 'canceled');
-            $this->limpar_carrinho();
-            Functions::redirect();
+            $this->purchasingStatus->saveDatasPurchasingStatus($data->format('Y-m-d H:i:s'), $idPur[0]->id, 7);
+            $this->esvaziarCarrinho();
         } else {
             /** Atualiza o status da compra para Confirmada */
             $this->purchasing->updatePurchaseStatus($idPur[0]->id, 'confirmed');
-            $this->limpar_carrinho();
+            $this->esvaziarCarrinho();
 
             /** Preparando pedido */
             $this->purchasingStatus->saveDatasPurchasingStatus($data->format('Y-m-d H:i:s'), $idPur[0]->id, 4);
@@ -319,9 +325,8 @@ class Carrinho
             /** Pedido entregue */
         }
 
-
-        die('Terminado');
-
+        $dados = ['codigo_compra' => $dados_compra['dados_pagamento']['codigo_compra'],
+        'total_compra' => $dados_compra['dados_pagamento']['total']];
 
         Functions::Layout([
             'layouts/html_header',

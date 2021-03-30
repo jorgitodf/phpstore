@@ -32,6 +32,7 @@ li {
 .container-carrinho {
   margin-top: 3.5rem !important;
   padding: 1rem;
+  height: 56.3%;
 }
 
 .container-endereco {
@@ -50,13 +51,25 @@ li {
 }
 
 .container-compra-resumo {
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   padding: 1rem;
 }
 
 .container-compra-confirmada {
-  margin-top: 4rem;
+  margin-top: 3rem;
   padding: 1rem;
+}
+
+.container-perfil-navegacao {
+  margin-top: 3.5rem;
+  padding: 1rem;
+  min-height: 394px;
+}
+
+.container-historico-compras {
+  margin-top: 2rem;
+  padding-top: 1.2rem;
+  min-height: 418px;
 }
 
 .container-login {

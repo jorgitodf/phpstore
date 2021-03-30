@@ -1,5 +1,7 @@
-<?php 
-use core\classes\Functions; 
+<?php
+
+use core\classes\Functions;
+
 $total_produtos = 0;
 if (isset($_SESSION['carrinho'])) {
     foreach ($_SESSION['carrinho'] as $value) {
@@ -16,10 +18,10 @@ if (isset($_SESSION['carrinho'])) {
         <a href="?r=home" class="nav-item">Home</a>
         <a href="?r=loja" class="nav-item">Loja</a>
 
-        <?php if (Functions::clienteLogado()): ?>
-            <a href="" class="nav-item">Minha Conta</a>
+        <?php if (Functions::clienteLogado()) : ?>
+            <a href="?r=minha-conta" class="nav-item">Minha Conta</a>
             <a href="?r=logout" class="nav-item">Logout</a>
-        <?php else: ?>
+        <?php else : ?>
             <a href="?r=login" class="nav-item">Login</a>
             <a href="?r=novo_cliente" class="nav-item">Criar Conta</a>
         <?php endif; ?>

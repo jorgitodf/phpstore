@@ -16,7 +16,8 @@
             "core\\" : "core/"
         },
         "files": [
-            "config.php"
+            "config.php",
+            "core/helpers/functions.php"
         ]
     }
 }

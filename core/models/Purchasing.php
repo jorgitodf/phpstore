@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace core\models;
 
 use core\classes\Database;
+use core\classes\Functions;
 use Exception;
 use PDOException;
 
@@ -13,11 +14,13 @@ class Purchasing
     private $bd;
     private $table = 'purchasing';
     private $pp;
+    private $ps;
 
     public function __construct()
     {
         $this->bd = new Database();
         $this->pp = new PurchaseProduct();
+        $this->ps = new PurchasingStatus();
     }
 
 
@@ -76,5 +79,47 @@ class Purchasing
         );
 
         return true;
+    }
+
+    public function getPurchasingByIdUser(int $userId): array
+    {
+        $pur = $this->bd->select("SELECT id, data_compra, codigo_compra, users_id 
+            FROM purchasing WHERE users_id = :user_id", [':user_id' => $userId]);
+
+
+        foreach ($pur as $key => $value) {
+            $array[] = $this->bd->select("SELECT 
+                p.id AS purchasing_id, p.data_compra, p.codigo_compra, prod.nome_produto, 
+                prod.imagem, pp.preco_unidade, pp.quantidade
+            FROM purchasing p
+            JOIN purchase_product pp ON (pp.purchasing_id = p.id)
+            JOIN products prod ON (pp.products_id = prod.id)
+            WHERE pp.purchasing_id = :purchasing_id", [':purchasing_id' => $value->id]);
+        }
+
+        foreach ($pur as $key => $value) {
+            foreach ($array as $k => $row) {
+                if ($value->id == $row[$k]->purchasing_id) {
+                    $pur[$key]->produtos = $array[$k];
+                }
+            }
+        }
+
+        $total = 0;
+
+        foreach ($pur as $key => $value) {
+            foreach ($pur[$key]->produtos as $row) {
+                $total += $row->preco_unidade;
+                $pur[$key]->total = $total;
+            }
+        }
+
+        foreach ($pur as $key => $value) {
+            $r = $this->ps->getPurchasingStatusByidPurchasing((int)$value->id);
+            $pur[$key]->status = $r[0]->status;
+            $pur[$key]->cor = $r[0]->cor;
+        }
+
+        return $pur;
     }
 }

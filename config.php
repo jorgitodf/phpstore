@@ -1,11 +1,14 @@
 <?php
 
+//ini_set('error_reporting', ~E_WARNING);
+
+//error_reporting(0);
 date_default_timezone_set('America/Sao_Paulo');
 
 define('APP_NAME', 'PHPSTORE');
 define('APP_VERSION', '1.0.0');
 
-define('BASE_URL', "http://".$_SERVER["HTTP_HOST"]."/");
+define('BASE_URL', "http://" . $_SERVER["HTTP_HOST"] . "/");
 
 define('EMAIL_HOST', 'smtp.gmail.com');
 define('EMAIL_FROM', 'lojaphpstore@gmail.com');

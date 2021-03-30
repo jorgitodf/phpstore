@@ -1,3 +1,5 @@
+var base_url = window.location.origin+window.location.pathname;
+
 function adicionar_carrinho(id_produto)
 {
     axios.defaults.withCredentials = true;
@@ -67,9 +69,8 @@ window.addEventListener('load', ()=> {
 
     /** Validação dos Dados do Cadastro de Endereço */
     let form = document.querySelector('#form-cad-end');
-
     
-    var base_url = window.location.origin+window.location.pathname;
+    
 
     if (form != null) {
         form.addEventListener('submit', (e)=> {
@@ -93,7 +94,7 @@ window.addEventListener('load', ()=> {
                     tipo_endereco: tipo_endereco
                 }    
             }
-    
+
             axios.defaults.withCredentials = true;
             
             axios({
@@ -110,26 +111,22 @@ window.addEventListener('load', ()=> {
                 $(".msgSuccess").html("<span>"+res.data.success+"</span>");
                 setTimeout(() => {
                     $(".msgSuccess").css("display", "none");
+                    redirect(base_url, "/");
                 }, 4000)                
             }).catch((err) => {
-
                 if (err.response.status == 403) {
                     $(".msgError").css("display", "block");
                     $(".msgError").html("<span>"+err.response.data.error+"</span>");
                     setTimeout(() => {
                         $(".msgError").css("display", "none");
-                    }, 4000)
+                    }, 4000);
                 } else if (err.response.status == 404) {
                     $(".msgError").css("display", "block");
                     $(".msgError").html("<span>"+err.response.data.error+"</span>");
                     setTimeout(() => {
                         $(".msgError").css("display", "none");
-                    }, 4000)
-                    // setInterval(function() {
-                    //     redirect(base_url, "/");
-                    // }, 4000);
+                    }, 4000);
                 }
-
             });
         });
     }

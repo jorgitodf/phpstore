@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace core\models;
 
 use core\classes\Database;
+use core\classes\Functions;
 use PDOException;
 
 class PurchasingStatus
@@ -24,7 +25,7 @@ class PurchasingStatus
             try {
                 $this->bd->insert(
                     "INSERT INTO {$this->table} VALUES (
-                    :data_status, :purchasing_id, :status_id)",
+                    0, :data_status, :purchasing_id, :status_id)",
                     [
                         ':data_status' => $dataStatus,
                         ':purchasing_id' => $idPurchasing,
@@ -62,6 +63,43 @@ class PurchasingStatus
             $res = $this->bd->select(
                 "SELECT * FROM {$this->table} WHERE purchasing_id = :purchasing_id AND status_id = :status_id",
                 [':purchasing_id' => $idPurchasing, ':status_id' => $idStatus]
+            );
+            return $res;
+        } catch (PDOException $e) {
+            echo "Exception PurchasingStatusByidPurchasingidStatus: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function getPurchasingStatusByidPurchasing(int $idPurchasing)
+    {
+        try {
+            $res = $this->bd->select(
+                "SELECT 
+                    ps.data_status, ps.status_id,
+                    CASE
+                        WHEN s.nome_status = 'Enviar pedido' THEN 'Enviado'
+                        WHEN s.nome_status = 'Pedido confirmado' THEN 'Confirmado'
+                        WHEN s.nome_status = 'Pagamento pendente' THEN 'Pendente'
+                        WHEN s.nome_status = 'Pagamento aprovado' THEN 'Aprovado'
+                        WHEN s.nome_status = 'Preparando pedido' THEN 'Preparando'
+                        WHEN s.nome_status = 'Pedido entregue' THEN 'Entregue'
+                        WHEN s.nome_status = 'Pagamento Negado' THEN 'Negado'
+                        END AS status,
+                        CASE
+                            WHEN s.nome_status = 'Enviar pedido' THEN 'badge-success'
+                            WHEN s.nome_status = 'Pedido confirmado' THEN 'badge-primary'
+                            WHEN s.nome_status = 'Pagamento pendente' THEN 'badge-warning'
+                            WHEN s.nome_status = 'Pagamento aprovado' THEN 'badge-info'
+                            WHEN s.nome_status = 'Preparando pedido' THEN 'badge-secondary'
+                            WHEN s.nome_status = 'Pedido entregue' THEN 'badge-dark'
+                            WHEN s.nome_status = 'Pagamento Negado' THEN 'badge-danger'
+                        END AS cor                    
+                FROM {$this->table} ps
+                JOIN `status` s ON (s.id = ps.status_id)
+                WHERE ps.purchasing_id = :purchasing_id 
+                ORDER BY ps.id DESC LIMIT 1",
+                [':purchasing_id' => $idPurchasing]
             );
             return $res;
         } catch (PDOException $e) {

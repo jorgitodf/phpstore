@@ -20,6 +20,8 @@ $routes = [
     'produtos' => 'produto@buscar_produtos_disponiveis',
     'endereco' => 'endereco@endereco',
     'criar-endereco' => 'endereco@criarEndereco',
+    'minha-conta' => 'user@index',
+    'historico-compras' => 'compra@index'
 ];
 
 $action = 'home';

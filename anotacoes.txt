@@ -17,3 +17,7 @@ Versionamento semântico 1.0.0
 <small><?=APP_NAME.'('.APP_VERSION.') &copy' . date('Y') ?></small>
 
 https://www.php.net/manual/en/function.http-response-code.php
+
+
+$mensagem = "Deu certo";
+return response_json(compact('mensagem'), 303);

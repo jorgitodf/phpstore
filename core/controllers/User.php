@@ -212,4 +212,20 @@ class User
         Functions::redirect();
         return;
     }
+
+    public function index()
+    {
+        if (!Functions::clienteLogado()) {
+            Functions::redirect();
+            return;
+        }
+
+        Functions::Layout([
+            'layouts/html_header',
+            'layouts/header',
+            'perfil_navegacao',
+            'layouts/footer',
+            'layouts/html_footer',
+        ]);
+    }
 }

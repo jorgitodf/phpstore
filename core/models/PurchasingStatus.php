@@ -107,4 +107,22 @@ class PurchasingStatus
             return false;
         }
     }
+
+
+    public function getStatusPurchasingById(int $idPurchasing)
+    {
+        try {
+            $res = $this->bd->select(
+                "SELECT ps.status_id, ps.data_status, s.nome_status, s.mensagem_status
+               FROM {$this->table} ps
+               JOIN `status` s ON (s.id = ps.status_id)
+               WHERE ps.purchasing_id = :purchasing_id",
+                [':purchasing_id' => $idPurchasing]
+            );
+            return $res;
+        } catch (PDOException $e) {
+            echo "Exception getStatusPurchasingById: " . $e->getMessage();
+            return false;
+        }
+    }
 }

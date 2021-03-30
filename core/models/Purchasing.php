@@ -122,4 +122,92 @@ class Purchasing
 
         return $pur;
     }
+
+    public function getPurchasingById(int $id): array
+    {
+        $pur = $this->bd->select("SELECT id, data_compra, codigo_compra, users_id 
+            FROM purchasing WHERE id = :id", [':id' => $id]);
+
+
+        foreach ($pur as $key => $value) {
+            $array[] = $this->bd->select("SELECT 
+                p.id AS purchasing_id, prod.nome_produto, 
+                prod.imagem, pp.preco_unidade, pp.quantidade
+            FROM purchasing p
+            JOIN purchase_product pp ON (pp.purchasing_id = p.id)
+            JOIN products prod ON (pp.products_id = prod.id)
+            WHERE pp.purchasing_id = :purchasing_id", [':purchasing_id' => $value->id]);
+        }
+
+        foreach ($pur as $key => $value) {
+            foreach ($array as $k => $row) {
+                if ($value->id == $row[$k]->purchasing_id) {
+                    $pur[$key]->produtos = $array[$k];
+                }
+            }
+        }
+
+        $total = 0;
+
+        foreach ($pur as $key => $value) {
+            foreach ($pur[$key]->produtos as $row) {
+                $total += $row->preco_unidade;
+                $pur[$key]->total = $total;
+            }
+        }
+
+        foreach ($pur as $key => $value) {
+            $r = $this->ps->getPurchasingStatusByidPurchasing((int)$value->id);
+            $pur[$key]->status = $r[0]->status;
+            $pur[$key]->cor = $r[0]->cor;
+        }
+
+        return $pur;
+    }
+
+    public function getPurchasingByIdWithStatus(int $id)
+    {
+        $pur = $this->bd->select("SELECT id, data_compra, codigo_compra, users_id 
+            FROM purchasing WHERE id = :id", [':id' => $id]);
+
+        if (count($pur) > 0) {
+            foreach ($pur as $key => $value) {
+                $array[] = $this->bd->select("SELECT 
+                    p.id AS purchasing_id, prod.nome_produto, 
+                    prod.imagem, pp.preco_unidade, pp.quantidade
+                FROM purchasing p
+                JOIN purchase_product pp ON (pp.purchasing_id = p.id)
+                JOIN products prod ON (pp.products_id = prod.id)
+                WHERE pp.purchasing_id = :purchasing_id", [':purchasing_id' => $value->id]);
+            }
+    
+            foreach ($pur as $key => $value) {
+                foreach ($array as $k => $row) {
+                    if ($value->id == $row[$k]->purchasing_id) {
+                        $pur[$key]->produtos = $array[$k];
+                    }
+                }
+            }
+    
+            $total = 0;
+    
+            foreach ($pur as $key => $value) {
+                foreach ($pur[$key]->produtos as $row) {
+                    $total += $row->preco_unidade;
+                    $pur[$key]->total = $total;
+                }
+            }
+    
+            $r = $this->ps->getPurchasingStatusByidPurchasing((int)$value->id);
+            $pur[0]->status = $r[0]->status;
+            $pur[0]->cor = $r[0]->cor;
+    
+            $pur[0]->statuspagamento = $this->ps->getStatusPurchasingById((int)$value->id);
+
+            return $pur;
+
+        } else {
+            return false;
+        }
+    }
 }

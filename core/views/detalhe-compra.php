@@ -1,7 +1,7 @@
-<div class="container-fluid col-sm-12 col-lg-12 col-md-12 container-historico-compras">
+<div class="container-fluid col-sm-12 col-lg-12 col-md-12 container-detalhe-compra">
     <div class="row my-4 rhc">
         <div class="col-sm-10 col-lg-10 col-md-10 offset-sm-1 offset-lg-1 offset-md-1">
-            <h3>Pedidos</h3>
+            <h3>Detalhe da Compra</h3>
             <?php if (count($purchasing) > 0) : ?>
             <?php foreach ($purchasing as $key => $value) : ?>
             <div class="card">

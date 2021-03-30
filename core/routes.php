@@ -22,6 +22,7 @@ $routes = [
     'criar-endereco' => 'endereco@criarEndereco',
     'minha-conta' => 'user@index',
     'historico-compras' => 'compra@index',
+    'detalhe-compra' => 'compra@detalheCompra',
     'dados-pessoais' => 'user@dadosPessoais'
 ];
 

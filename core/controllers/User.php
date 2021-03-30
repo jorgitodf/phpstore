@@ -189,7 +189,7 @@ class User
                 $_SESSION['id_cliente'] = $res[0]->id;
                 $_SESSION['nome_cliente'] = $res[0]->name;
                 $_SESSION['email_cliente'] = $res[0]->email;
-                $_SESSION['token_cliente'] = mb_convert_case(Functions::createHash(60), MB_CASE_TITLE, 'UTF-8');
+                $_SESSION['csrf_token'] = mb_convert_case(Functions::createHash(60), MB_CASE_TITLE, 'UTF-8');
 
                 if (isset($_SESSION['tmp_carrinho'])) {
                     unset($_SESSION['tmp_carrinho']);

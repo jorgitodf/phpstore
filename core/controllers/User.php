@@ -241,12 +241,14 @@ class User
             return;
         }
 
+        $dados = $this->user->getAddressUserById($_SESSION['id_cliente']);
+
         Functions::Layout([
             'layouts/html_header',
             'layouts/header',
             'dados_pessoais',
             'layouts/footer',
             'layouts/html_footer',
-        ]);
+        ], compact('dados'));
     }
 }

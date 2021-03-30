@@ -21,7 +21,8 @@ $routes = [
     'endereco' => 'endereco@endereco',
     'criar-endereco' => 'endereco@criarEndereco',
     'minha-conta' => 'user@index',
-    'historico-compras' => 'compra@index'
+    'historico-compras' => 'compra@index',
+    'dados-pessoais' => 'user@dadosPessoais'
 ];
 
 $action = 'home';

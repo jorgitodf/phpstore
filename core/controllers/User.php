@@ -228,4 +228,25 @@ class User
             'layouts/html_footer',
         ]);
     }
+
+    public function dadosPessoais()
+    {
+        if (!Functions::clienteLogado()) {
+            Functions::redirect();
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] != 'GET') {
+            Functions::redirect();
+            return;
+        }
+
+        Functions::Layout([
+            'layouts/html_header',
+            'layouts/header',
+            'dados_pessoais',
+            'layouts/footer',
+            'layouts/html_footer',
+        ]);
+    }
 }

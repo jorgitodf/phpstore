@@ -17,6 +17,6 @@ define('EMAIL_PORT', 587);
 
 define('MYSQL_SERVER', 'localhost');
 define('MYSQL_DATABASE', 'php_store');
-define('MYSQL_USER', 'user_php_store');
-define('MYSQL_PASS', '!user_php_store@2021');
+define('MYSQL_USER', 'root');
+define('MYSQL_PASS', '!Root@Dev');
 define('MYSQL_CHARSET', 'utf8');

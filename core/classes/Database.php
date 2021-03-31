@@ -175,9 +175,11 @@ class Database
             if (!empty($parametros)) {
                 $exec = $this->connect->prepare($sql);
                 $exec->execute($parametros);
+                return true;
             } else {
                 $exec = $this->connect->prepare($sql);
                 $exec->execute();
+                return true;
             }
         } catch (PDOException $e) {
             echo $e->getMessage();

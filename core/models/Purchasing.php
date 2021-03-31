@@ -88,7 +88,7 @@ class Purchasing
 
 
         foreach ($pur as $key => $value) {
-            $array[] = $this->bd->select("SELECT 
+            $array[$key] = $this->bd->select("SELECT 
                 p.id AS purchasing_id, p.data_compra, p.codigo_compra, prod.nome_produto, 
                 prod.imagem, pp.preco_unidade, pp.quantidade
             FROM purchasing p
@@ -105,6 +105,7 @@ class Purchasing
             }
         }
 
+        //Functions::printDados($pur);
         $total = 0;
 
         foreach ($pur as $key => $value) {
@@ -180,7 +181,7 @@ class Purchasing
                 JOIN products prod ON (pp.products_id = prod.id)
                 WHERE pp.purchasing_id = :purchasing_id", [':purchasing_id' => $value->id]);
             }
-    
+
             foreach ($pur as $key => $value) {
                 foreach ($array as $k => $row) {
                     if ($value->id == $row[$k]->purchasing_id) {
@@ -188,24 +189,23 @@ class Purchasing
                     }
                 }
             }
-    
+
             $total = 0;
-    
+
             foreach ($pur as $key => $value) {
                 foreach ($pur[$key]->produtos as $row) {
                     $total += $row->preco_unidade;
                     $pur[$key]->total = $total;
                 }
             }
-    
+
             $r = $this->ps->getPurchasingStatusByidPurchasing((int)$value->id);
             $pur[0]->status = $r[0]->status;
             $pur[0]->cor = $r[0]->cor;
-    
+
             $pur[0]->statuspagamento = $this->ps->getStatusPurchasingById((int)$value->id);
 
             return $pur;
-
         } else {
             return false;
         }

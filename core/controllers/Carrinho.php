@@ -308,6 +308,23 @@ class Carrinho
             $this->purchasing->updatePurchaseStatus($idPur[0]->id, 'confirmed');
             $this->esvaziarCarrinho();
 
+            /** Atualiza na tabela dos produtos para a quantidade atual após a venda confirmada */
+            $idsProd = [];
+            foreach ($dados_compra['dados_produto'] as $value) {
+                $idsProd[] = $value['id'];
+            }
+            $idsProdIn = implode(",", $idsProd);
+            $resProds = $this->produto->buscar_produtos_por_id($idsProdIn);
+            foreach ($resProds as $key => $value) {
+                foreach ($dados_compra['dados_produto'] as $k => $v) {
+                    if ($value->id == $v['id']) {
+                        $idsProdP[$k]['id'] = $v['id'];
+                        $idsProdP[$k]['quantidade'] = $value->qtd_estoque - $v['quantidade'];
+                    }
+                }
+            }
+            $this->produto->updateProductsAfterPurchase($idsProdP);
+
             /** Preparando pedido */
             $this->purchasingStatus->saveDatasPurchasingStatus($data->format('Y-m-d H:i:s'), $idPur[0]->id, 4);
 

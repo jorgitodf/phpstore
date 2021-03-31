@@ -36,8 +36,8 @@ li {
 }
 
 .container-endereco {
-  margin-top: 1.6rem;
-  padding: 1rem;
+  margin-top: 4rem;
+  min-height: 394px;
 }
 
 .container-loja {
@@ -92,7 +92,13 @@ li {
 .container-novo-usuario-sucesso {
   margin-top: 3.8rem;
   padding-top: 1.2rem;
-  min-height: 420px;
+  min-height: 418px;
+}
+
+.conta-validada-sucesso {
+  margin-top: 3.8rem;
+  padding-top: 1.2rem;
+  min-height: 418px;
 }
 
 footer {

@@ -22,14 +22,14 @@ class Products
 
         $sql = "SELECT * FROM {$this->table} WHERE visibilidade = 1 ";
 
-        foreach($categorias as $key => $r) {
+        foreach ($categorias as $key => $r) {
             if (in_array($categoria, $r)) {
-                $sql .= "AND category_id = ".$r['id']."";
+                $sql .= "AND category_id = " . $r['id'] . "";
             }
         }
 
         return $this->bd->select($sql);
-    }    
+    }
 
 
     public function lista_categorias()
@@ -38,13 +38,13 @@ class Products
 
         $categorias = [];
 
-        foreach($response as $key => $r) {
+        foreach ($response as $key => $r) {
             $categorias[$key]['id'] = $r->id;
             $categorias[$key]['nome_categoria'] = strtolower($r->nome_categoria);
         }
 
         return $categorias;
-    }    
+    }
 
     public function verificar_produto_estoque($id_produto)
     {
@@ -58,10 +58,24 @@ class Products
         return count($res) != 0 ? true : false;
     }
 
-
     public function buscar_produtos_por_id($ids)
     {
         return $this->bd->select("SELECT * FROM {$this->table} WHERE id IN ($ids)");
     }
 
+    public function updateProductsAfterPurchase(array $dados)
+    {
+        foreach ($dados as $key => $value) {
+            $res = $this->bd->update(
+                "UPDATE products SET qtd_estoque = :quantidade WHERE id = :id",
+                [':quantidade' => $value['quantidade'], ":id" => $value['id']]
+            );
+        }
+
+        if (is_bool($res)) {
+            return true;
+        } else {
+            return $res;
+        }
+    }
 }

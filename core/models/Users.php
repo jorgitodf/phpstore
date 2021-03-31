@@ -104,7 +104,7 @@ class Users
 
         $res = $this->bd->select("SELECT token FROM users WHERE email = :email", $parametros);
 
-        if ($res[0]->token != mull) {
+        if ($res[0]->token != null) {
             return true;
         } else {
             return false;

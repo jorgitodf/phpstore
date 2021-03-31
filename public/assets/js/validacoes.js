@@ -22,6 +22,70 @@ function verDetalheCompra(id)
         });
 }
 
+function validaDadosCadastroEndereco()
+{
+    let form = document.querySelector('#form-cad-end');
+
+    if (form != null) {
+        form.addEventListener('submit', (e)=> {
+
+            e.preventDefault();
+    
+            let public_place_id = document.getElementById('public_place_id').value;
+            let tipo_endereco = document.getElementById('tipo_endereco').value;
+            let complemento = document.getElementById('complemento').value;
+            let numero = document.getElementById('numero').value;
+            let bairro = document.getElementById('bairro').value;
+            let cep = document.getElementById('cep').value;
+            let uf = document.getElementById('uf').value;
+    
+            let data = {
+                0: {
+                    complemento: complemento, numero:numero, bairro: bairro, cep: cep, uf: uf, 
+                    public_place_id: public_place_id
+                },
+                1: {
+                    tipo_endereco: tipo_endereco
+                }    
+            }
+
+            axios.defaults.withCredentials = true;
+            
+            axios({
+                method: 'post',
+                url: "?r=criar-endereco",
+                data: JSON.stringify(data),
+                dataType: 'JSON',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json;charset=utf-8'
+                }
+            }).then((res) => {
+                $(".msgSuccess").css("display", "block");
+                $(".msgSuccess").html("<span>"+res.data.success+"</span>");
+                setTimeout(() => {
+                    $(".msgSuccess").css("display", "none");
+                    redirect(base_url, "/");
+                }, 4000)                
+            }).catch((err) => {
+                if (err.response.status == 403) {
+                    $(".msgError").css("display", "block");
+                    $(".msgError").html("<span>"+err.response.data.error+"</span>");
+                    setTimeout(() => {
+                        $(".msgError").css("display", "none");
+                    }, 4000);
+                } else if (err.response.status == 404) {
+                    $(".msgError").css("display", "block");
+                    $(".msgError").html("<span>"+err.response.data.error+"</span>");
+                    setTimeout(() => {
+                        $(".msgError").css("display", "none");
+                    }, 4000);
+                }
+            });
+        });
+    }
+}
+
 function createElementDetalhesPedidido(data)
 {
     const elem = document.querySelector('.rhc'); 
@@ -137,79 +201,7 @@ function createElementDetalhesPedidido(data)
         dCardBodyProds1.appendChild(divOrd3);
         dCardBodyProds1.appendChild(divOrd4);
     });
-
-    
-
-
-
-
 }
-
-function validaDadosCadastroEndereco()
-{
-    let form = document.querySelector('#form-cad-end');
-
-    if (form != null) {
-        form.addEventListener('submit', (e)=> {
-
-            e.preventDefault();
-    
-            let public_place_id = document.getElementById('public_place_id').value;
-            let tipo_endereco = document.getElementById('tipo_endereco').value;
-            let complemento = document.getElementById('complemento').value;
-            let numero = document.getElementById('numero').value;
-            let bairro = document.getElementById('bairro').value;
-            let cep = document.getElementById('cep').value;
-            let uf = document.getElementById('uf').value;
-    
-            let data = {
-                0: {
-                    complemento: complemento, numero:numero, bairro: bairro, cep: cep, uf: uf, 
-                    public_place_id: public_place_id
-                },
-                1: {
-                    tipo_endereco: tipo_endereco
-                }    
-            }
-
-            axios.defaults.withCredentials = true;
-            
-            axios({
-                method: 'post',
-                url: "?r=criar-endereco",
-                data: JSON.stringify(data),
-                dataType: 'JSON',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json;charset=utf-8'
-                }
-            }).then((res) => {
-                $(".msgSuccess").css("display", "block");
-                $(".msgSuccess").html("<span>"+res.data.success+"</span>");
-                setTimeout(() => {
-                    $(".msgSuccess").css("display", "none");
-                    redirect(base_url, "/");
-                }, 4000)                
-            }).catch((err) => {
-                if (err.response.status == 403) {
-                    $(".msgError").css("display", "block");
-                    $(".msgError").html("<span>"+err.response.data.error+"</span>");
-                    setTimeout(() => {
-                        $(".msgError").css("display", "none");
-                    }, 4000);
-                } else if (err.response.status == 404) {
-                    $(".msgError").css("display", "block");
-                    $(".msgError").html("<span>"+err.response.data.error+"</span>");
-                    setTimeout(() => {
-                        $(".msgError").css("display", "none");
-                    }, 4000);
-                }
-            });
-        });
-    }
-}
-
-
 
 function redirect(base_url, route) {
     return window.location.replace(base_url + route);

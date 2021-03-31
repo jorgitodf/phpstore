@@ -27,3 +27,10 @@ function formatarMoedaPtBr($valor)
         return "R$ " . number_format($valor, 2, ",", ".");
     }
 }
+
+function csrf_token()
+{
+    if (isset($_SESSION['csrf_token'])) {
+        return $_SESSION['csrf_token'];
+    }
+}

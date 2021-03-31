@@ -38,14 +38,25 @@ class Compra
 
     public function detalheCompra()
     {
-        if ($_SERVER['REQUEST_METHOD'] != 'GET' && !isset($_GET['id']) && !is_numeric($_GET['id']) && !isset($_SESSION['csrf_token'])) {
-            Functions::redirect();
-            return;
+        $token = apache_request_headers()['Authorization'];
+
+        if (
+            $_SERVER['REQUEST_METHOD'] != 'GET' || !isset($_GET['id']) || !is_numeric($_GET['id'])
+             || $_SESSION['csrf_token'] != $token
+        ) {
+            return response_json(['error' => "Não Encontrado"], 404);
         }
 
-        $id_compra = trim(filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT));
+        $id_compra = (int)trim(filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT));
 
         $purchasing = $this->purchasing->getPurchasingByIdWithStatus($id_compra);
+
+        if ($purchasing) {
+            return response_json(['dados' => $purchasing], 200);
+        }
+
+
+        exit;
 
         Functions::Layout([
             'layouts/html_header',

@@ -165,6 +165,10 @@ class User
             $_SESSION['erro'] = 'Informe o seu E-mail!';
             $this->login($email, null);
             return;
+        } elseif ($this->user->verifyContaActived($email)) {
+            $_SESSION['erro'] = 'A sua conta ainda não foi ativada!';
+            $this->login($email, $password);
+            return;
         } elseif (!filter_var($email, FILTER_SANITIZE_EMAIL)) {
             $_SESSION['erro'] = 'O E-mail informado não é válido!';
             $this->login($email, $password);

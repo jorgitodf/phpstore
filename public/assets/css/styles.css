@@ -89,6 +89,12 @@ li {
   padding: 1rem;
 }
 
+.container-novo-usuario-sucesso {
+  margin-top: 3.8rem;
+  padding-top: 1.2rem;
+  min-height: 420px;
+}
+
 footer {
   background-color: #3c4a52;
   color: white;
@@ -183,6 +189,10 @@ footer .li-image-correios {
 
 .negrito {
   font-weight: bold;
+}
+
+.hover:hover {
+  background-color: #98FB98;
 }
 
 /*# sourceMappingURL=styles.css.map */

@@ -96,6 +96,21 @@ class Users
         }
     }
 
+    public function verifyContaActived(string $email)
+    {
+        $parametros = [
+            ':email' => $email
+        ];
+
+        $res = $this->bd->select("SELECT token FROM users WHERE email = :email", $parametros);
+
+        if ($res[0]->token != mull) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function getAddressUserById(int $id_cliente)
     {
         $parametros = [

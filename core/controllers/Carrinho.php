@@ -4,6 +4,7 @@ namespace core\controllers;
 
 use core\classes\Functions;
 use core\classes\SendEmail;
+use core\classes\Carrinho as Cart;
 use core\models\Products;
 use core\models\Purchasing;
 use core\models\PurchasingStatus;
@@ -241,20 +242,9 @@ class Carrinho
         $ids = implode(",", $ids);
         $results = $this->produto->buscar_produtos_por_id($ids);
 
-        /** Monta a lista de produtos que estão no carrinho para preparar para o envio do e-mail da confirmação da compra */
-        $string_produtos = [];
-        foreach ($results as $value) {
-            $quantidade = $_SESSION['carrinho'][$value->id];
-            $string_produtos[] = "{$quantidade}x {$value->nome_produto} 
-            - R$ " . number_format($value->preco, 2, ",", ".");
-        }
-        $dados_compra['lista_compra'] = $string_produtos;
-        $dados_compra['total'] = "R$ " . number_format($_SESSION['total_compra'], 2, ",", ".");
-        $dados_compra['dados_pagamento'] = [
-            'numero_conta' => '12345679',
-            'codigo_compra' => $_SESSION['codigo_compra'],
-            'total' => "R$ " . number_format($_SESSION['total_compra'], 2, ",", ".")
-        ];
+        /** Lista dos produtos que estão no carrinho para preparar para o envio do e-mail da confirmação da compra */
+        $dados_compra = Cart::mountListPurschasing($results);
+        
 
         /** Envia o e-mail com os dados da Confirmação da Compra e com os dados para o pagamento */
         $this->email->enviar_email_confirmacao_compra($_SESSION['email_cliente'], $dados_compra);

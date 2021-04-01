@@ -7,7 +7,6 @@ namespace core\models;
 use core\classes\Database;
 use core\classes\Functions;
 use Exception;
-use PDOException;
 
 class Purchasing
 {
@@ -86,9 +85,8 @@ class Purchasing
         $pur = $this->bd->select("SELECT id, data_compra, codigo_compra, users_id 
             FROM purchasing WHERE users_id = :user_id", [':user_id' => $userId]);
 
-
         foreach ($pur as $key => $value) {
-            $array[$key] = $this->bd->select("SELECT 
+            $pur[$key]->produtos = $this->bd->select("SELECT 
                 p.id AS purchasing_id, p.data_compra, p.codigo_compra, prod.nome_produto, 
                 prod.imagem, pp.preco_unidade, pp.quantidade
             FROM purchasing p
@@ -97,15 +95,6 @@ class Purchasing
             WHERE pp.purchasing_id = :purchasing_id", [':purchasing_id' => $value->id]);
         }
 
-        foreach ($pur as $key => $value) {
-            foreach ($array as $k => $row) {
-                if ($value->id == $row[$k]->purchasing_id) {
-                    $pur[$key]->produtos = $array[$k];
-                }
-            }
-        }
-
-        //Functions::printDados($pur);
         $total = 0;
 
         foreach ($pur as $key => $value) {
@@ -114,6 +103,8 @@ class Purchasing
                 $pur[$key]->total = $total;
             }
         }
+
+        //Functions::printDados($pur);
 
         foreach ($pur as $key => $value) {
             $r = $this->ps->getPurchasingStatusByidPurchasing((int)$value->id);

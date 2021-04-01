@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace core\models;
 
 use core\classes\Database;
+use core\classes\Functions;
 use core\models\AddresUser;
 
 class Address
@@ -68,6 +69,38 @@ class Address
             return false;
         }
     }
+
+    public function updateAddress(array $data, $idUser)
+    {
+        /** 1 - atualizar a address_user pelo users_id e pegar o address_id -> updateAddressUser(array $data, int $idUser) OK*/
+        $resAU = $this->addresUser->updateAddressUser($data, (int)$idUser);
+
+        /** 2 - atualizar a address pelo address_id */
+        $parametros = [
+            ':complemento' => ucfirst(trim(filter_var($data[0]['complemento'], FILTER_SANITIZE_STRING))),
+            ':numero' => trim(filter_var($data[0]['numero'], FILTER_SANITIZE_NUMBER_INT)),
+            ':bairro' => ucfirst(trim(filter_var($data[0]['bairro'], FILTER_SANITIZE_STRING))),
+            ':cep' => trim(filter_var($this->formataCep($data[0]['cep']), FILTER_SANITIZE_NUMBER_INT)),
+            ':uf' => trim(filter_var($data[0]['uf'], FILTER_SANITIZE_STRING)),
+            ':updated_at' => date('Y-m-d H:i:s'),
+            ':public_place_id' => trim(filter_var($data[0]['public_place_id'], FILTER_SANITIZE_NUMBER_INT)),
+            ':id' => $resAU
+        ];
+
+        $res = $this->bd->update("UPDATE {$this->table} SET complemento = :complemento, numero = :numero,
+            bairro = :bairro, cep = :cep, uf = :uf, updated_at = :updated_at, public_place_id = :public_place_id
+            WHERE id = :id", $parametros);
+
+        /** 3 - atualizar a users pelo users_id */
+
+        if ($res == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
     private function formataCep($cep)
     {

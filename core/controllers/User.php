@@ -4,20 +4,25 @@ namespace core\controllers;
 
 use core\classes\Functions;
 use core\classes\SendEmail;
+use core\classes\Validations;
 use core\models\Users;
 use core\models\Address;
-use Exception;
+use core\models\PublicPlace;
 
 class User
 {
     private $user;
     private $address;
+    private $public_place;
+    private $validations;
 
     public function __construct()
     {
         $this->user = new Users();
         $this->email = new SendEmail();
         $this->address = new Address();
+        $this->public_place = new PublicPlace();
+        $this->validations = new Validations();
     }
 
     //===========================================================================================//
@@ -245,7 +250,8 @@ class User
             return;
         }
 
-        $dados = $this->user->getAddressUserById($_SESSION['id_cliente']);
+        $dados['user'] = $this->user->getAddressUserById($_SESSION['id_cliente']);
+        $dados['logradouros'] = $this->public_place->getAllPublicPlace();
 
         Functions::Layout([
             'layouts/html_header',
@@ -254,5 +260,27 @@ class User
             'layouts/footer',
             'layouts/html_footer',
         ], compact('dados'));
+    }
+
+    public function updateUser()
+    {
+        $token = apache_request_headers()['Authorization'];
+        if ($_SERVER['REQUEST_METHOD'] != 'POST' || $_SESSION['csrf_token'] != $token) {
+            return response_json(['error' => "Não Encontrado"], 404);
+        }
+
+        $dados = json_decode(file_get_contents('php://input'), true);
+
+        $validations = $this->validations->validateUpdateUser($dados);
+
+        if ($validations == null) {
+            $res = $this->address->updateAddress($dados, $_SESSION['id_cliente']);
+            if ($res == true) {
+                echo json_encode(['success' => 'Endereço Atualizado com Sucesso!'], http_response_code(201));
+                return;
+            }
+        }
+
+        return response_json(['error' => $validations['msg-error']], $validations['status-code']);
     }
 }

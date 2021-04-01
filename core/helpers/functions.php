@@ -13,6 +13,13 @@ function formataDataPtBr($data)
     }
 }
 
+function formataCep($cep)
+{
+    if (!empty($cep)) {
+        return vsprintf("%s%s%s%s%s-%s%s%s", str_split($cep));
+    }
+}
+
 function formataDateTimePtBr($data)
 {
     if (!empty($data)) {

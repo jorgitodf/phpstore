@@ -23,7 +23,8 @@ $routes = [
     'minha-conta' => 'user@index',
     'historico-compras' => 'compra@index',
     'detalhe-compra' => 'compra@detalheCompra',
-    'dados-pessoais' => 'user@dadosPessoais'
+    'dados-pessoais' => 'user@dadosPessoais',
+    'update-user' => 'user@updateUser'
 ];
 
 $action = 'home';

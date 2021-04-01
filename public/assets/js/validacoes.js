@@ -4,6 +4,7 @@ var base_url = window.location.origin+window.location.pathname;
 
 function start() {
     validaDadosCadastroEndereco();
+    validationUpdateUser();
 }
 function verDetalheCompra(id)
 {
@@ -227,3 +228,77 @@ function formataDataHora(data) {
     novadata = split[2] + "/" + split[1] + "/" + split[0] + " às " + hr;
     return novadata;
 }
+
+
+
+
+
+function validationUpdateUser() {
+
+    let form = document.querySelector('#form-update-user');
+
+    if (form != null) {
+        form.addEventListener('submit', function(event) {
+
+            event.preventDefault();
+       
+            let nome = document.getElementById('nome').value;
+            let email = document.getElementById('email').value;
+            let public_place_id = document.getElementById('public_place_id').value;
+            let complemento = document.getElementById('complemento').value;
+            let numero = document.getElementById('numero').value;
+            let bairro = document.getElementById('bairro').value;
+            let cep = document.getElementById('cep').value;
+            let uf = document.getElementById('uf').value;
+            let tipo_endereco = document.getElementById('tipo_endereco').value;
+    
+            let data = {
+                0: {
+                    nome:nome, email: email, complemento: complemento, numero:numero, bairro: bairro, cep: cep, uf: uf, 
+                    public_place_id: public_place_id
+                },
+                1: {
+                    tipo_endereco: tipo_endereco
+                }    
+            }
+    
+            let token = document.querySelector('[name="_csrf_token"]').value;
+            axios.defaults.headers.common['Authorization'] = token;
+    
+            axios({
+                method: 'post',
+                url: "?r=update-user",
+                data: JSON.stringify(data),
+                dataType: 'JSON',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json;charset=utf-8'
+                }
+            }).then((res) => {
+                $(".msgSuccess").css("display", "block");
+                $(".msgSuccess").html("<span>"+res.data.success+"</span>");
+                setTimeout(() => {
+                    $(".msgSuccess").css("display", "none");
+                    //redirect(base_url, "/");
+                }, 4000)                
+            }).catch((err) => {
+                if (err.response.status == 403) {
+                    $(".msgError").css("display", "block");
+                    $(".msgError").html("<span>"+err.response.data.error+"</span>");
+                    setTimeout(() => {
+                        $(".msgError").css("display", "none");
+                    }, 4000);
+                } else if (err.response.status == 404) {
+                    $(".msgError").css("display", "block");
+                    $(".msgError").html("<span>"+err.response.data.error+"</span>");
+                    setTimeout(() => {
+                        $(".msgError").css("display", "none");
+                    }, 4000);
+                }
+            });
+    
+        });
+    }
+
+
+};

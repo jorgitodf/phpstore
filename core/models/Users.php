@@ -4,14 +4,17 @@ namespace core\models;
 
 use core\classes\Database;
 use core\classes\Functions;
+use core\models\AddresUser;
 
 class Users
 {
     private $bd;
+    private $au;
 
     public function __construct()
     {
         $this->bd = new Database();
+        $this->au = new AddresUser();
     }
 
 
@@ -127,6 +130,21 @@ class Users
 
         if (count($res) > 0) {
             return $res[0];
+        } else {
+            return false;
+        }
+    }
+
+    public function verifyEmail(string $email)
+    {
+        $parametros = [
+            ':email' => $email
+        ];
+
+        $res = $this->bd->select("SELECT email FROM users WHERE email = :email", $parametros);
+
+        if (count($res) > 0) {
+            return true;
         } else {
             return false;
         }

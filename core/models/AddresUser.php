@@ -56,15 +56,9 @@ class AddresUser
 
     public function getAddressUser(int $idUser, int $idTpEnd)
     {
-        if ($idTpEnd == 1) {
-            $tipo_endereco = "Residencial";
-        } else {
-            $tipo_endereco = "Trabalho";
-        }
-
         $res = $this->bd->select(
-            "SELECT id, address_id FROM {$this->table} WHERE users_id = :users_id AND tipo_endereco = :tipo_endereco",
-            [':users_id' => $idUser, ':tipo_endereco' => $tipo_endereco]
+            "SELECT id, address_id FROM {$this->table} WHERE users_id = :users_id",
+            [':users_id' => $idUser]
         );
 
         if (count($res) > 0) {

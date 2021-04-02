@@ -95,16 +95,13 @@ class Purchasing
             WHERE pp.purchasing_id = :purchasing_id", [':purchasing_id' => $value->id]);
         }
 
-        $total = 0;
-
         foreach ($pur as $key => $value) {
             foreach ($pur[$key]->produtos as $row) {
-                $total += $row->preco_unidade;
-                $pur[$key]->total = $total;
+                $pur[$key]->total = $this->bd->select("SELECT SUM(preco_unidade) AS total
+                FROM purchase_product
+                WHERE purchasing_id = :purchasing_id", [':purchasing_id' => $row->purchasing_id])[0]->total;
             }
         }
-
-        //Functions::printDados($pur);
 
         foreach ($pur as $key => $value) {
             $r = $this->ps->getPurchasingStatusByidPurchasing((int)$value->id);

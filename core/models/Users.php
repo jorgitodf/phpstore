@@ -107,7 +107,7 @@ class Users
 
         $res = $this->bd->select("SELECT token FROM users WHERE email = :email", $parametros);
 
-        if ($res[0]->token != null) {
+        if (count($res) > 0 && $res[0]->token != null) {
             return true;
         } else {
             return false;
@@ -120,7 +120,7 @@ class Users
             ':id_cliente' => $id_cliente
         ];
 
-        $res = $this->bd->select("SELECT u.name, u.email, pp.logradouro, a.complemento, a.numero, 
+        $res = $this->bd->select("SELECT u.name, u.email, pp.id AS id_logradouro, pp.logradouro, a.complemento, a.numero, 
                     a.bairro, a.cep, a.uf, au.tipo_endereco
             FROM addres_user au
             JOIN users u ON (u.id = au.users_id)
@@ -138,7 +138,7 @@ class Users
     public function verifyEmail(string $email)
     {
         $parametros = [
-            ':email' => $email
+            ':email' => strtolower($email) 
         ];
 
         $res = $this->bd->select("SELECT email FROM users WHERE email = :email", $parametros);

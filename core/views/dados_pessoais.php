@@ -26,7 +26,7 @@
                         <div class="col-md-3 col-sm-3 col-lg-3 mb-3">
                             <label for="public_place_id">Endereço:</label>
                             <select class="form-control" name="public_place_id" id="public_place_id">
-                                <option value="1"><?=$dados['user']->logradouro?></option>
+                                <option value="<?=$dados['user']->id_logradouro?>"><?=$dados['user']->logradouro?></option>
                                 <?php if (isset($dados['logradouros'])) : ?>
                                 <?php foreach ($dados['logradouros'] as $value) : ?>
                                 <?="<option value='" . $value->id . "'>" . $value->logradouro . "</option>"?>
@@ -64,6 +64,7 @@
                         <div class="col-md-3 col-sm-3 col-lg-3 mb-3">
                             <label for="tipo_endereco">Tipo Endereço:</label>
                             <select class="form-control" name="tipo_endereco" id="tipo_endereco">
+                                <option value="<?=$dados['user']->tipo_endereco == "Residencial" ? 1 : 2?>"><?=$dados['user']->tipo_endereco?></option>
                                 <option value="1">Residencial</option>
                                 <option value="2">Trabalho</option>
                             </select>
